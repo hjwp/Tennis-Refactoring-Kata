@@ -11,7 +11,7 @@ class TennisGame8:
     player2_score: int = 0
 
     def won_point(self, player_name) -> TennisGame8:
-        if player_name == "player1":
+        if player_name == self.player1_name:
             return TennisGame8(
                 player1_name=self.player1_name,
                 player2_name=self.player2_name,
