@@ -26,54 +26,39 @@ class TennisGame8:
                 player2_score=self.player2_score + 1,
             )
 
-    def score(self):
-        result = "Current score: "
+    def _point_name(self, point: int) -> str:
+        match point:
+            case 0:
+                return "Love"
+            case 1:
+                return "Fifteen"
+            case 2:
+                return "Thirty"
+            case 3:
+                return "Forty"
+            case _:
+                raise Exception("Invalid point value")
+
+    def _score(self) -> str:
         if self.player1_score == self.player2_score:
-            # tie score
-            result: str
-            match self.player1_score:
-                case 0:
-                    result += "Love-All"
-                case 1:
-                    result += "Fifteen-All"
-                case 2:
-                    result += "Thirty-All"
-                case _:
-                    result += "Deuce"
+            if self.player1_score > 2:
+                return "Deuce"
+            return f"{self._point_name(self.player1_score)}-All"
 
-        elif self.player1_score >= 4 or self.player2_score >= 4:
-            # end-game score
-            if self.player1_score - self.player2_score == 1:
-                result += "Advantage " + self.player1_name
-            elif self.player1_score - self.player2_score == -1:
-                result += "Advantage " + self.player2_name
-            elif self.player1_score - self.player2_score >= 2:
-                result += "Win for " + self.player1_name
-            else:
-                result += "Win for " + self.player2_name
+        if self.player1_score < 4 and self.player2_score < 4:
+            return f"{self._point_name(self.player1_score)}-{self._point_name(self.player2_score)}"
 
+        return self._end_game_score()
+
+    def _end_game_score(self) -> str:
+        if self.player1_score - self.player2_score == 1:
+            return "Advantage " + self.player1_name
+        elif self.player1_score - self.player2_score == -1:
+            return "Advantage " + self.player2_name
+        elif self.player1_score - self.player2_score >= 2:
+            return "Win for " + self.player1_name
         else:
-            # regular score
-            match self.player1_score:
-                case 0:
-                    result += "Love"
-                case 1:
-                    result += "Fifteen"
-                case 2:
-                    result += "Thirty"
-                case _:
-                    result += "Forty"
+            return "Win for " + self.player2_name
 
-            result += "-"
-
-            match self.player2_score:
-                case 0:
-                    result += "Love"
-                case 1:
-                    result += "Fifteen"
-                case 2:
-                    result += "Thirty"
-                case _:
-                    result += "Forty"
-
-        return result + ", enjoy your game!"
+    def score(self):
+        return f"Current score: {self._score()}, enjoy your game!"
