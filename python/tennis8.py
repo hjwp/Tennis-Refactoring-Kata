@@ -1,20 +1,30 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Self
 
 
-@dataclass
+@dataclass(frozen=True)
 class TennisGame8:
     player1_name: str
     player2_name: str
     player1_score: int = 0
     player2_score: int = 0
 
-    def won_point(self, player_name) -> Self:
+    def won_point(self, player_name) -> TennisGame8:
         if player_name == "player1":
-            self.player1_score += 1
+            return TennisGame8(
+                player1_name=self.player1_name,
+                player2_name=self.player2_name,
+                player1_score=self.player1_score + 1,
+                player2_score=self.player2_score,
+            )
         else:
-            self.player2_score += 1
-        return self
+            return TennisGame8(
+                player1_name=self.player1_name,
+                player2_name=self.player2_name,
+                player1_score=self.player1_score,
+                player2_score=self.player2_score + 1,
+            )
 
     def score(self):
         result = "Current score: "
