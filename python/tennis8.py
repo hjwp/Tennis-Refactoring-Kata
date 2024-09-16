@@ -1,11 +1,15 @@
-class TennisGame8:
-    def __init__(self, player1_name, player2_name):
-        self.player1_name = player1_name
-        self.player2_name = player2_name
-        self.player1_score = 0
-        self.player2_score = 0
+from dataclasses import dataclass
+from typing import Self
 
-    def won_point(self, player_name):
+
+@dataclass
+class TennisGame8:
+    player1_name: str
+    player2_name: str
+    player1_score: int = 0
+    player2_score: int = 0
+
+    def won_point(self, player_name) -> Self:
         if player_name == "player1":
             self.player1_score += 1
         else:
