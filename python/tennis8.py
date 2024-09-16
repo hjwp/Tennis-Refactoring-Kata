@@ -10,6 +10,7 @@ class TennisGame8:
             self.player1_score += 1
         else:
             self.player2_score += 1
+        return self
 
     def score(self):
         result = "Current score: "
